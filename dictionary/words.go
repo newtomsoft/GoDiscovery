@@ -1,4 +1,4 @@
-package main
+package dictionary
 
 import (
 	"bufio"
@@ -6,16 +6,8 @@ import (
 	"os"
 )
 
-func main() {
-	firstLetter := "B"
-	length := 7
-	var _ = getAllWordsMap()[firstLetter][length]
-	word := getFirstWord(firstLetter, length)
-	print(word)
-}
-
-func getFirstWord(firstLetter string, length int) string {
-	for _, word := range getFirstWords() {
+func GetFirstWord(firstLetter string, length int) string {
+	for _, word := range getFirstsWords() {
 		if string(word[0]) == firstLetter && len(word) == length {
 			return word
 		}
@@ -23,16 +15,7 @@ func getFirstWord(firstLetter string, length int) string {
 	return ""
 }
 
-func getFirstWords() []string {
-	readFile, err := os.Open("words_4-12.txt")
-	if err != nil {
-		fmt.Println(err)
-	}
-	words := readWords(readFile)
-	return words
-}
-
-func getAllWordsMap() map[string]map[int][]string {
+func GetAllWordsMap() map[string]map[int][]string {
 	allWords := make(map[string]map[int][]string)
 	for _, letter := range "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
 		allWords[string(letter)] = make(map[int][]string)
@@ -43,6 +26,15 @@ func getAllWordsMap() map[string]map[int][]string {
 		allWords[string(letter)][length] = append(allWords[string(letter)][length], word)
 	}
 	return allWords
+}
+
+func getFirstsWords() []string {
+	readFile, err := os.Open("words_4-12.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
+	words := readWords(readFile)
+	return words
 }
 
 func getAllWords() []string {
